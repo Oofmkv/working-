@@ -27,7 +27,7 @@ jobs:
        - name: cloning repo
          continue-on-error: true
          run: |
-           git clone ${{ secrets.REPO }}
+           git clone https://${GitHubName}:${{ secrets.GH_TOKEN2 }}@github.com/Senpai-sama-afk/VideoCompress21.git 
        - name: Running VideoCompressor
          timeout-minutes: 300
          continue-on-error: true
