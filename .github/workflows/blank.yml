@@ -27,13 +27,13 @@ jobs:
        - name: cloning repo
          continue-on-error: true
          run: |
-           git clone -b vps https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Senpai-sama-afk/ProjectFizilion.git 
-       - name: Running Userbot
+           git clone -b main https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Senpai-sama-afk/supercompressorv3.git 
+       - name: Running Supercompressorv3
          timeout-minutes: 300
          continue-on-error: true
          run: |
-           cd ProjectFizilion
-           docker build -t userbot . && docker run userbot
+           cd supercompressorv3
+           sudo apt -qq install -y git wget pv jq wget python3-dev ffmpeg mediainfo && pip3 install python-decouple telethon requests && pip3 install -r requirements.txt && python3 start.py
            
        - name: Loop workflow
          continue-on-error: true
