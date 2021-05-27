@@ -27,21 +27,20 @@ jobs:
        - name: cloning repo
          continue-on-error: true
          run: |
-           git clone -b vps https://${GitHubName}:${{ secrets.GH_TOKEN2 }}@github.com/Senpai-sama-afk/VideoCompress21.git 
-       - name: Running VideoCompressor
+           git clone -b main https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Senpai-sama-afk/supercompressorv1.git 
+       - name: Running supercompress
          timeout-minutes: 300
          continue-on-error: true
          run: |
-           cd VideoCompress21
-           docker build -t compress .
-           docker run compress
+           cd supercompressorv1
+           sudo apt -qq install -y git wget pv jq wget python3-dev ffmpeg mediainfo && pip3 install python-decouple telethon requests && pip3 install -r requirements.txt && python3 start.py
            
        - name: Loop workflow
          continue-on-error: true
          run: |
-           git clone https://${{ secrets.GH_TOKEN2 }}@github.com/${GITHUB_REPOSITORY} loop
+           git clone https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
            cd loop || exit 1
            echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
            git add looper.txt
            git commit -m "Workflow : Loop at $(date -u +%D-%T%P)"
-           git push -q https://${{ secrets.GH_TOKEN2 }}@github.com/${GITHUB_REPOSITORY} HEAD:main
+           git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main
