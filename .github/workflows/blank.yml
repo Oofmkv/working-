@@ -27,12 +27,12 @@ jobs:
        - name: cloning repo
          continue-on-error: true
          run: |
-           git clone -b main https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Senpai-sama-afk/supercompressorv3.git 
+           git clone -b main https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Senpai-sama-afk/heimansbhdhabot.git 
        - name: Running Supercompressorv3
          timeout-minutes: 300
          continue-on-error: true
          run: |
-           cd supercompressorv3
+           cd heimansbhdhabot
            sudo apt -qq install -y git wget pv jq wget python3-dev ffmpeg mediainfo && pip3 install python-decouple telethon requests && pip3 install -r requirements.txt && python3 start.py
            
        - name: Loop workflow
