@@ -1,0 +1,49 @@
+name: setting up environment
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore: 'README.md'
+  workflow_dispatch:
+    
+env:
+  GitHubMail: "godeliver@kai84.ml"
+  GitHubName: "Oofmkv" 
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Set Git Configs & Secrets
+         run: |
+           git config --global user.email ${GitHubMail}
+           git config --global user.name ${GitHubName}
+           git config --global credential.helper store
+           echo "https://${GitHubName}:${{ secrets.GH_TOKEN2 }}@github.com" > ~/.git-credentials
+
+       - name: cloning repo
+         continue-on-error: true
+         run: |
+           git clone -b main https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/Oofmkv/video.git 
+       - name: Running bot
+         timeout-minutes: 600
+         continue-on-error: true
+         run: |
+           cd video
+           docker build -t name && docker run name
+
+
+           
+           
+       - name: Loop workflow
+         continue-on-error: true
+         run: |
+           git clone https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
+           cd loop || exit 1
+           echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
+           git add looper.txt
+           git commit -m "Workflow : Loop at $(date -u +%D-%T%P)"
+           git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main
